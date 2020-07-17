@@ -1,7 +1,7 @@
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.5/en_core_web_sm-2.2.5.tar.gz
 discord.py
 python-dotenv
--e git://github.com/srevinsaju/sugaroid.git#egg=sugaroid
+https://github.com/srevinsaju/sugaroid/archive/master.tar.gz
 Django
 gunicorn
 django_heroku
@@ -10,4 +10,4 @@ psutil
 wikipedia-api
 chatterbot
 mediawikiapi
-git+git://github.com/gunthercox/chatterbot-corpus.git#egg=chatterbot-corpus
+https://github.com/gunthercox/chatterbot-corpus/archive/master.tar.gz
