@@ -11,7 +11,8 @@ import sugaroid_commands as scom
 from datetime import datetime
 from nltk import word_tokenize
 import sugaroid as sug
-from sugaroid import sugaroid, ver
+from sugaroid import sugaroid
+from sugaroid import version
 from dotenv import load_dotenv
 import time
 from datetime import timedelta
@@ -62,7 +63,7 @@ async def update_sugaroid(message):
     os.chdir('/')
     importlib.reload(sug)
     importlib.reload(sugaroid)
-    importlib.reload(ver)
+    importlib.reload(version)
 
     # updating the bot
     os.chdir(os.path.dirname(sug.__file__))
@@ -95,7 +96,7 @@ async def update_sugaroid(message):
     await client.change_presence(
         activity=discord.Game(
             name='v{} since {:02d}:{:02d} UTC'.format(
-                ver.version().get_commit()[:10],
+                version.VERSION,
                 datetime.utcnow().hour,
                 datetime.utcnow().minute
             )
@@ -111,7 +112,7 @@ async def on_ready():
     print(f'{client.user.name} has connected to Discord!')
     os.chdir(os.path.dirname(sug.__file__))
     await client.change_presence(activity=discord.Game(name='v{} since {:02d}:{:02d} UTC'
-                                 .format(ver.version().get_commit()[:10], datetime.utcnow().hour,
+                                 .format(version.VERSION, datetime.utcnow().hour,
                                          datetime.utcnow().minute)))
 
 
