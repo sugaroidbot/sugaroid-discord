@@ -18,7 +18,10 @@ class SugaroidDiscordCommands:
         print("Call")
         command = str(command).lower().strip()
         print("Received command: ", command)
-        return await self.commands.get(command, self.do_nothing)(message)
+        if command in self.commands:
+            return await self.commands.get(command, self.do_nothing)(message)
+        else:
+            return False
     
     async def do_nothing(self, message):
         return False
