@@ -19,6 +19,7 @@ class SugaroidDiscordCommands:
         command = str(command).lower().strip()
         print("Received command: ", command)
         if command in self.commands:
+            print("Found")
             return await self.commands.get(command, self.do_nothing)(message)
         else:
             return False

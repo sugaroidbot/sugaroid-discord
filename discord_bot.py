@@ -146,7 +146,7 @@ async def on_message(message):
 
         elif 'update' in msg and len(msg) <= 7:
             if str(message.author) == 'srevinsaju#8324':
-                update_sugaroid(message)
+                await update_sugaroid(message)
             else:
                 # no permissions
                 await message.channel.send(
