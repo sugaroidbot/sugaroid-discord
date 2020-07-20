@@ -140,7 +140,7 @@ async def on_message(message):
         command_processor = scom.SugaroidDiscordCommands(client)
 
         is_valid_command = await command_processor.call_command(msg, message)
-        print("Recv")
+        print("Recv", is_valid_command)
         if is_valid_command:
             return
 
