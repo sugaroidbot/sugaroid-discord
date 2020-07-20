@@ -36,7 +36,6 @@ async def update_sugaroid(message):
     # initiate and announce to the user of the upgrade
     await message.channel.send(
         "Updating my brain with new features :smile:"
-        "(https://github.com/srevinsaju/sugaroid)"
     )
 
     # execute pip3 install
@@ -54,10 +53,6 @@ async def update_sugaroid(message):
     ecode = pip_popen_subprocess.wait(10000)
     out, err = pip_popen_subprocess.communicate()
     stdout, stderr = out.decode(), err.decode()
-    await message.channel.send(
-        f"I updated my brain. ```{stdout}``` "
-        f"stderr=```{stderr}```. Exited with {ecode}"
-    )
 
     # reload modules
     os.chdir('/')
@@ -86,12 +81,6 @@ async def update_sugaroid(message):
     stdout, stderr = out.decode(), err.decode()
 
     importlib.reload(scom)
-
-    # announce to the users
-    await message.channel.send(
-        f"I updated the bot. ```{stdout}``` "
-        f"stderr=```{stderr}``` Exited with {ecode}"
-    )
 
     await client.change_presence(
         activity=discord.Game(
