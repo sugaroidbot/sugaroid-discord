@@ -155,8 +155,11 @@ async def on_message(message):
                     f"Seems like you do not have sufficient permissions"
                 )
             return
-
-        response = sg.parse(msg)
+        try:
+            response = sg.parse(msg)
+        except Exception as e:
+            # some random error occured. Log it
+            response = "```An unhandled exception occurred: " + e + "```"
         lim = 1995
         if len(str(response)) >= lim:
             response1 = str(response)[:lim] + '...'
