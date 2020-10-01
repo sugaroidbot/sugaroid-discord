@@ -21,8 +21,6 @@ process = psutil.Process()
 init_cpu_time = process.cpu_percent()
 
 
-
-
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 sg = sugaroid.Sugaroid()
@@ -39,7 +37,7 @@ async def update_sugaroid(message):
     )
 
     # execute pip3 install
-    pip=shutil.which('pip')
+    pip = shutil.which('pip')
     pip_popen_subprocess = subprocess.Popen(
         shlex.split(
             f'{pip} install --upgrade --force-reinstall '
@@ -62,7 +60,7 @@ async def update_sugaroid(message):
 
     # updating the bot
     os.chdir(os.path.dirname(sug.__file__))
-    git=shutil.which('git')
+    git = shutil.which('git')
     # reset --hard
     git_reset_popen_subprocess = subprocess.Popen(
         shlex.split(f'{git} reset --hard origin/master'),
@@ -95,16 +93,13 @@ async def update_sugaroid(message):
     return
 
 
-
 @client.event
 async def on_ready():
     print(f'{client.user.name} has connected to Discord!')
     os.chdir(os.path.dirname(sug.__file__))
     await client.change_presence(activity=discord.Game(name='v{} since {:02d}:{:02d} UTC'
-                                 .format(version.VERSION, datetime.utcnow().hour,
-                                         datetime.utcnow().minute)))
-
-
+                                                       .format(version.VERSION, datetime.utcnow().hour,
+                                                               datetime.utcnow().minute)))
 
 
 @client.event
@@ -119,69 +114,72 @@ async def on_message(message):
         message.content.startswith('<@!684746563540484099>'),
         message.content.startswith('!S')
     )):
-        # clean the message
-        msg = message.content\
-            .replace('<@684746563540484099>', '')\
-            .replace('<@!684746563540484099>', '')\
-            .replace('!S', '')\
-            .strip()
+        # make the user aware that Sugaroid received the message
+        async with message.channel.typing():
+            # clean the message
+            msg = message.content\
+                .replace('<@684746563540484099>', '')\
+                .replace('<@!684746563540484099>', '')\
+                .replace('!S', '')\
+                .strip()
 
-        command_processor = scom.SugaroidDiscordCommands(client)
+            command_processor = scom.SugaroidDiscordCommands(client)
 
-        is_valid_command = await command_processor.call_command(msg, message)
-        print("Recv", is_valid_command)
-        if is_valid_command:
-            return
+            is_valid_command = await command_processor.call_command(msg, message)
+            print("Recv", is_valid_command)
+            if is_valid_command:
+                return
 
-        elif 'update' in msg and len(msg) <= 7:
-            if str(message.author) == 'srevinsaju#8324':
-                await update_sugaroid(message)
-            else:
-                # no permissions
-                await message.channel.send(
-                    f"I am sorry @{message.author}. I would not be able to update myself.\n"
-                    f"Seems like you do not have sufficient permissions"
-                )
-            return
-
-        elif 'stop' in message.content and 'learn' in message.content:
-            if str(message.author) == 'srevinsaju#8324':
-                global interrupt_local
-                interrupt_local = False
-                await message.channel.send("InterruptAdapter terminated")
-            else:
-                await message.channel.send(
-                    f"I am sorry @{message.author}. I would not be able to update myself.\n"
-                    f"Seems like you do not have sufficient permissions"
-                )
-            return
-        try:
-            response = sg.parse(msg)
-        except Exception as e:
-            # some random error occured. Log it
-            response = "```An unhandled exception occurred: " + e + "```"
-        lim = 1995
-        if len(str(response)) >= lim:
-            response1 = str(response)[:lim] + '...'
-            await message.channel.send(response1)
-
-            if len(str(response)) >= (2 * lim):
-                response2 = str(response)[lim:2*lim] + '...'
-                await message.channel.send(response2)
-                
-                if len(str(response)) >= (3*lim):
-                    response2 = str(response)[2*lim:3*lim] + '...'
-                    await message.channel.send(response2)
-                    response2 = str(response)[3 * lim:4 * lim]
-                    await message.channel.send(response2)
+            elif 'update' in msg and len(msg) <= 7:
+                if str(message.author) == 'srevinsaju#8324':
+                    await update_sugaroid(message)
                 else:
-                    response2 = str(response)[2 * lim:3 * lim]
+                    # no permissions
+                    await message.channel.send(
+                        f"I am sorry @{message.author}. I would not be able to update myself.\n"
+                        f"Seems like you do not have sufficient permissions"
+                    )
+                return
+
+            elif 'stop' in message.content and 'learn' in message.content:
+                if str(message.author) == 'srevinsaju#8324':
+                    global interrupt_local
+                    interrupt_local = False
+                    await message.channel.send("InterruptAdapter terminated")
+                else:
+                    await message.channel.send(
+                        f"I am sorry @{message.author}. I would not be able to update myself.\n"
+                        f"Seems like you do not have sufficient permissions"
+                    )
+                return
+            lim = 1995
+            try:
+                response = sg.parse(msg)
+            except Exception as e:
+                # some random error occured. Log it
+                response = "```An unhandled exception occurred: " + e + "```"
+
+            if len(str(response)) >= lim:
+                response1 = str(response)[:lim] + '...'
+                await message.channel.send(response1)
+                if len(str(response)) >= (2 * lim):
+                    response2 = str(response)[lim:2 * lim] + '...'
+                    await message.channel.send(response2)
+
+                    if len(str(response)) >= (3 * lim):
+                        response2 = str(response)[2 * lim:3 * lim] + '...'
+                        await message.channel.send(response2)
+                        response2 = str(response)[3 * lim:4 * lim]
+                        await message.channel.send(response2)
+                    else:
+                        response2 = str(response)[2 * lim:3 * lim]
+                        await message.channel.send(response2)
+                else:
+                    response2 = str(response)[lim:2 * lim]
                     await message.channel.send(response2)
             else:
-                response2 = str(response)[lim:2 * lim]
-                await message.channel.send(response2)
-        else:
-            await message.channel.send(response)
+                await message.channel.send(response)
+                return
         return
 
     elif interrupt_local:
@@ -195,9 +193,10 @@ async def on_message(message):
             sg.append_author(author)
             sg.interrupt_ds()
             response = sg.parse(messages)
-            print(response, 's'*5)
+            print(response, 's' * 5)
             await message.channel.send(response)
         return
+
 
 @client.event
 async def on_member_join(member):
