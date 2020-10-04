@@ -3,6 +3,7 @@ discord.py
 akinator.py
 python-dotenv
 https://github.com/srevinsaju/sugaroid/archive/master.tar.gz
+
 freegames
 gunicorn
 psutil
