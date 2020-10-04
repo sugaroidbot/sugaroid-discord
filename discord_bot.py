@@ -5,6 +5,7 @@ import random
 import shlex
 import shutil
 import subprocess
+import traceback
 import psutil
 import discord
 import sugaroid_commands as scom
@@ -157,7 +158,8 @@ async def on_message(message):
                 response = sg.parse(msg)
             except Exception as e:
                 # some random error occured. Log it
-                response = "```An unhandled exception occurred: " + e + "```"
+                error_message = traceback.format_exc(chain=True)
+                response = "```An unhandled exception occurred: " + error_message + "```"
 
             if len(str(response)) >= lim:
                 response1 = str(response)[:lim] + '...'
