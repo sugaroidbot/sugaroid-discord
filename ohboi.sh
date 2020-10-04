@@ -5,7 +5,7 @@ set -e
 
 sginit="$(which python3) discord_bot.py"
 
-until "$(sginit)"; do
+until "$sginit"; do
     echo "Respawning sugaroid bot"
     sleep 1
 done
