@@ -133,7 +133,10 @@ async def on_message(message):
 
             elif 'update' in msg and len(msg) <= 7:
                 if str(message.author) == 'srevinsaju#8324':
-                    await update_sugaroid(message)
+                    await message.channel.send("Please hold on, I will quickly"
+                                               "restart")
+                    print("Quitting sugaroid")
+                    sys.exit(1)
                 else:
                     # no permissions
                     await message.channel.send(
