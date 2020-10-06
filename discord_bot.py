@@ -42,18 +42,12 @@ async def update_sugaroid(message):
     pip = shutil.which('pip')
     pip_popen_subprocess = subprocess.Popen(
         shlex.split(
-            f'{pip} install --upgrade --force-reinstall '
+            f'{pip} install --upgrade --force-reinstall --no-deps'
             f'https://github.com/srevinsaju/sugaroid/archive/master.zip'
         ),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stdout=sys.stdout,
+        stderr=sys.stderr
     )
-
-    # process information from the pip installer from Popen
-    ecode = pip_popen_subprocess.wait(10000)
-    out, err = pip_popen_subprocess.communicate()
-    stdout, stderr = out.decode(), err.decode()
-
     # reload modules
     os.chdir('/')
     importlib.reload(sug)
@@ -66,19 +60,15 @@ async def update_sugaroid(message):
     # reset --hard
     git_reset_popen_subprocess = subprocess.Popen(
         shlex.split(f'{git} reset --hard origin/master'),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stdout=sys.stdout,
+        stderr=sys.stderr
     ).wait(500)
     # git pull
     git_pull_popen_subprocess = subprocess.Popen(
         shlex.split(f'{git} pull'),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stdout=sys.stdout,
+        stderr=sys.stderr
     )
-    # process information from the git
-    ecode = git_pull_popen_subprocess.wait(10000)
-    out, err = git_pull_popen_subprocess.communicate()
-    stdout, stderr = out.decode(), err.decode()
 
     importlib.reload(scom)
 
