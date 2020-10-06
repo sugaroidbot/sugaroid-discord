@@ -42,7 +42,7 @@ async def update_sugaroid(message):
     pip = shutil.which('pip')
     pip_popen_subprocess = subprocess.Popen(
         shlex.split(
-            f'{pip} install --upgrade --force-reinstall --no-deps'
+            f'{pip} install --upgrade --force-reinstall --no-deps '
             f'https://github.com/srevinsaju/sugaroid/archive/master.zip'
         ),
         stdout=sys.stdout,
