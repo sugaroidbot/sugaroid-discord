@@ -92,7 +92,8 @@ async def update_sugaroid(message):
         )
     )
     await message.channel.send("Update completed. :smile:")
-    return
+    await message.channel.send("Restarting myself :zzz:")
+    sys.exit(1)
 
 
 @client.event
@@ -134,10 +135,7 @@ async def on_message(message):
 
             elif 'update' in msg and len(msg) <= 7:
                 if str(message.author) == 'srevinsaju#8324':
-                    await message.channel.send("Please hold on, I will quickly"
-                                               "restart")
-                    print("Quitting sugaroid")
-                    sys.exit(1)
+                    await update_sugaroid(message)
                 else:
                     # no permissions
                     await message.channel.send(
