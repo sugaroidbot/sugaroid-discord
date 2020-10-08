@@ -32,7 +32,7 @@ interrupt_local = False
 start_time = datetime.now()
 
 
-async def update_sugaroid(message):
+async def update_sugaroid(message, branch='master'):
     # initiate and announce to the user of the upgrade
     await message.channel.send(
         "Updating my brain with new features :smile:"
@@ -43,7 +43,7 @@ async def update_sugaroid(message):
     pip_popen_subprocess = subprocess.Popen(
         shlex.split(
             f'{pip} install --upgrade --force-reinstall --no-deps '
-            f'https://github.com/srevinsaju/sugaroid/archive/master.zip'
+            f'https://github.com/srevinsaju/sugaroid/archive/{branch}.zip'
         ),
         stdout=sys.stdout,
         stderr=sys.stderr
@@ -125,7 +125,10 @@ async def on_message(message):
 
             elif 'update' in msg and len(msg) <= 7:
                 if str(message.author) == 'srevinsaju#8324':
-                    await update_sugaroid(message)
+                    parts = msg.split()[-1]
+                    if parts.lower() == "update":
+                        parts = "master"
+                    await update_sugaroid(message, parts)
                 else:
                     # no permissions
                     await message.channel.send(
