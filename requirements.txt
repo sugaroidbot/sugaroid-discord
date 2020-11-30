@@ -2,7 +2,7 @@ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1
 discord.py
 akinator.py
 python-dotenv
-https://github.com/srevinsaju/sugaroid/archive/spooktober.tar.gz
+https://github.com/srevinsaju/sugaroid/archive/596a022ec6a7b801023f09d80d4f605a97de2245.tar.gz
 colorama
 freegames
 gunicorn
