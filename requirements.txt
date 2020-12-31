@@ -2,7 +2,7 @@ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1
 discord.py
 akinator.py
 python-dotenv
-https://github.com/srevinsaju/sugaroid/archive/ed64436c5d28de22d55ad52c1c611c00cb2c55e1.tar.gz
+https://github.com/srevinsaju/sugaroid/archive/4b722c27b3728693e89b4b580986b8ca3bd81b52.tar.gz
 colorama
 freegames
 gunicorn
