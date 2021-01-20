@@ -1,0 +1,10 @@
+staging:
+  stage: deploy
+  script:
+    - apt-get update -yq
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=sugaroid-telegram --api-key=$HEROKU_API_KEY
+  only:
+    - main
+    
