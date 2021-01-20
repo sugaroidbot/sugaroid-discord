@@ -6,5 +6,5 @@ staging:
     - gem install dpl
     - dpl --provider=heroku --app=sugaroid-telegram --api-key=$HEROKU_API_KEY
   only:
-    - main
+    - master
     
