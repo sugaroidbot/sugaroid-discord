@@ -59,6 +59,7 @@ def format_messages(message: str) -> str:
     new_message = message
     for i in formatters:
         new_message = new_message.replace(i, formatters[i])
+    return new_message
 
 
 async def update_sugaroid(message, branch="master"):
